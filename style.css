@@ -1,4 +1,4 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
@@ -68,7 +68,7 @@
     height: 40px;
     background-color: #333;
     position: fixed;
-    top: 20px ;
+    top: 20px;
     right: 30px;
     border-radius: 50%;
     color: #fff;
@@ -79,16 +79,26 @@
 
 #closeBtn {
     position: fixed;
-    /* color: red; */
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 5px #fff;
 }
 
 .pictureWindow {
     width: 800px;
     height: 500px;
-    background-color: #fff;
     display: none;
+    flex-wrap: wrap;
     justify-content: center;
+    align-items: flex-start;
     border-radius: 30px;
+    overflow: scroll;
+    scrollbar-width: none;
 }
 
 .pictureItem {
@@ -97,4 +107,23 @@
     background-color: #333;
     background-position: center;
     background-size: cover;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+#rewindSpeed {
+    position: fixed;
+    top: 35px;
+    right: 100px;
+}
+
+.textRewindSpeed {
+    position: fixed;
+    top: 30px;
+    right: 270px;
+}
+
+.rewindSpeedContainer {
+    display: flex;
+    font-size: 20px;
 }
