@@ -1,0 +1,100 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.wrap {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-position: center;
+    background-size: cover;
+}
+
+.inputContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.inputContainer input {
+    width: 70%;
+    height: 40px;
+    background-color: #333333cb;
+    color: #fff;
+    border: none;
+    font-size: 24px;
+    border-radius: 25px;
+    padding-left: 15px;
+    outline: none;
+}
+
+.inputContainer input::placeholder {
+    color: #fff;
+}
+
+.inputContainer button {
+    margin-left: 20px;
+    width: 100px;
+    background-color: orange;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    border: none;
+}
+
+.heartContainer {
+    width: 40px;
+    height: 40px;
+    background-color: #ffffffcd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 20px;
+}
+
+.heartContainer i {
+    color: red;
+}
+
+.menuBtn {
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    position: fixed;
+    top: 20px ;
+    right: 30px;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#closeBtn {
+    position: fixed;
+    /* color: red; */
+}
+
+.pictureWindow {
+    width: 800px;
+    height: 500px;
+    background-color: #fff;
+    display: none;
+    justify-content: center;
+    border-radius: 30px;
+}
+
+.pictureItem {
+    width: 200px;
+    height: 100px;
+    background-color: #333;
+    background-position: center;
+    background-size: cover;
+}
