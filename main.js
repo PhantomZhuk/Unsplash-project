@@ -2,16 +2,11 @@ let timerThemeId;
 function getPhoto(theme = `random`) {
     fetch(`https://source.unsplash.com/1920x1080/?` + theme)
         .then(res => {
-            $(`#wrap`).css(`background-image`, `url(${res.url})`)
+            $(`#wrap`).css(`background-image`, `url(${res.url})`);
         });
 }
 
-getPhoto();
-
-let timerId = setInterval(() => {
-    getPhoto();
-}, $('#rewindSpeed').val());
-
+let timerId;
 function updateInterval() {
     clearInterval(timerId);
     timerId = setInterval(() => {
@@ -20,7 +15,6 @@ function updateInterval() {
     $(`#textRewindSpeed`).text($('#rewindSpeed').val().slice(0,-3)+' секунди')
 }
 
-getPhoto();
 updateInterval();
 
 $('#rewindSpeed').on('input', updateInterval);
@@ -40,6 +34,7 @@ $('#search').click(() => {
 
 let menuOpen = false;
 $(`.rewindSpeedContainer`).hide();
+$(`#clearLikedPhoto`).hide();
 $(`#closeBtn`).click(() => {
     if (menuOpen == false) {
         $(`.menuBtn`).css(`width`, `100%`)
@@ -51,6 +46,8 @@ $(`#closeBtn`).click(() => {
         $(`#closeBtn`).css(`right`, `30px`)
         $(`.pictureWindow`).css(`display`, `flex`)
         $(`.rewindSpeedContainer`).show();
+        $(`.heartContainer`).hide();
+        $(`#clearLikedPhoto`).show()
         menuOpen = true
     } else if (menuOpen == true) {
         $(`.menuBtn`).css(`width`, `40px`)
@@ -60,9 +57,24 @@ $(`#closeBtn`).click(() => {
         $(`.menuBtn`).css(`right`, `30px`)
         $(`.pictureWindow`).css(`display`, `none`)
         $(`.rewindSpeedContainer`).hide()
+        $(`.heartContainer`).show()
+        $(`#clearLikedPhoto`).hide()
         menuOpen = false
     }
 })
+
+
+let db = JSON.parse(localStorage.getItem('db')) || [];
+$('.heartContainer').click(function () {
+
+    let fullLink = $('.wrap').css('background-image').substring(5);
+    let normalizeLink = fullLink.substring(0, (fullLink.length - 2));
+    db.push(normalizeLink);
+    console.log(db);
+    localStorage.setItem('db', JSON.stringify(db))
+    $(`.pictureWindow`).empty();
+    showSavedPicture();
+});
 
 function showSavedPicture() {
     let db = JSON.parse(localStorage.getItem(`db`));
@@ -91,4 +103,14 @@ setInterval(() => {
 
 $(`.wrap`).mousemove(function () {
     activeTime = 0;
+});
+
+getPhoto();
+
+$(`#clearLikedPhoto`).click(()=>{
+    let db = JSON.parse(localStorage.getItem(`db`));
+    db.length = 0;
+    localStorage.setItem('db', JSON.stringify(db));
+    $(`.pictureWindow`).empty();
+    showSavedPicture();
 });
