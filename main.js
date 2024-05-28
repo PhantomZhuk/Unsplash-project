@@ -1,4 +1,5 @@
 let timerThemeId;
+let timerId;
 function getPhoto(theme = `random`) {
     fetch(`https://source.unsplash.com/1920x1080/?` + theme)
         .then(res => {
@@ -6,7 +7,8 @@ function getPhoto(theme = `random`) {
         });
 }
 
-let timerId;
+getPhoto();
+
 function updateInterval() {
     clearInterval(timerId);
     timerId = setInterval(() => {
@@ -105,7 +107,6 @@ $(`.wrap`).mousemove(function () {
     activeTime = 0;
 });
 
-getPhoto();
 
 $(`#clearLikedPhoto`).click(()=>{
     let db = JSON.parse(localStorage.getItem(`db`));
