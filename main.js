@@ -14,7 +14,7 @@ function updateInterval() {
     timerId = setInterval(() => {
         getPhoto();
     }, $('#rewindSpeed').val());
-    $(`#textRewindSpeed`).text($('#rewindSpeed').val().slice(0,-3)+' секунди')
+    $(`#textRewindSpeed`).text($('#rewindSpeed').val().slice(0, -3) + ' секунди')
 }
 
 updateInterval();
@@ -68,11 +68,9 @@ $(`#closeBtn`).click(() => {
 
 let db = JSON.parse(localStorage.getItem('db')) || [];
 $('.heartContainer').click(function () {
-
     let fullLink = $('.wrap').css('background-image').substring(5);
     let normalizeLink = fullLink.substring(0, (fullLink.length - 2));
     db.push(normalizeLink);
-    console.log(db);
     localStorage.setItem('db', JSON.stringify(db))
     $(`.pictureWindow`).empty();
     showSavedPicture();
@@ -108,10 +106,9 @@ $(`.wrap`).mousemove(function () {
 });
 
 
-$(`#clearLikedPhoto`).click(()=>{
-    let db = JSON.parse(localStorage.getItem(`db`));
-    db.length = 0;
+$(`#clearLikedPhoto`).click(() => {
+    db = [];
     localStorage.setItem('db', JSON.stringify(db));
-    $(`.pictureWindow`).empty();
+    $('.pictureWindow').empty();
     showSavedPicture();
 });
