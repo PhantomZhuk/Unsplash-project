@@ -1,5 +1,6 @@
 let timerThemeId;
 let timerId;
+let timeActive;
 function getPhoto(theme = `random`) {
     fetch(`https://source.unsplash.com/1920x1080/?` + theme)
         .then(res => {
@@ -24,6 +25,7 @@ $('#rewindSpeed').on('input', updateInterval);
 $('#themeInput').click(() => {
     clearInterval(timerId);
     clearInterval(timerThemeId);
+    clearInterval(timeActive);
 });
 
 $('#search').click(() => {
@@ -32,6 +34,15 @@ $('#search').click(() => {
     timerThemeId = setInterval(() => {
         getPhoto($('#themeInput').val());
     }, $('#rewindSpeed').val());
+
+    timeActive = setInterval(() => {
+        activeTime++
+        if (activeTime > 5) {
+            $(`.inputContainer`).hide();
+        } else {
+            $(`.inputContainer`).show();
+        }
+    }, 1000);
 });
 
 let menuOpen = false;
@@ -65,35 +76,56 @@ $(`#closeBtn`).click(() => {
     }
 })
 
-
+let numberPhoto = 0;
 let db = JSON.parse(localStorage.getItem('db')) || [];
 $('.heartContainer').click(function () {
     let fullLink = $('.wrap').css('background-image').substring(5);
     let normalizeLink = fullLink.substring(0, (fullLink.length - 2));
-    db.push(normalizeLink);
-    localStorage.setItem('db', JSON.stringify(db))
+    db.push(
+        {
+            url: normalizeLink,
+            number: numberPhoto++
+        }
+    );
+    localStorage.setItem('db', JSON.stringify(db));
     $(`.pictureWindow`).empty();
     showSavedPicture();
+    $('.photoPopup').hide();
 });
 
 function showSavedPicture() {
-    let db = JSON.parse(localStorage.getItem(`db`));
+    let db = JSON.parse(localStorage.getItem('db'));
     for (let el of db) {
-        $(`.pictureWindow`).append(`
-        <div class="pictureItem" style="background-image: url(${el});">
-
-        </div>`
-        )
-    }
-}
+        $('.pictureWindow').append(`
+            <div 
+            id="photo${el.numberl}" 
+            class="pictureItem" 
+            style="background-image: url(${el.url});">
+                <div id="popup${el.number}" 
+                class="photoPopup">
+                    <a class="downloadPhoto"
+                    id="downloadPhoto${el.number}"
+                    href="${el.url}"
+                    download="Photo${el.number}.jpg"
+                    >
+                        <i class="fa-solid fa-file-arrow-down"></i>
+                    </a>
+                    <div class="deletePhoto"
+                    id="deletePhoto${el.number}">
+                        <i class="fa-regular fa-trash-can"></i>
+                    </div>
+                </div>
+            </div>
+        `);
+    };
+};
 
 showSavedPicture();
 
 let activeTime = 0;
 
-setInterval(() => {
+timeActive = setInterval(() => {
     activeTime++
-    console.log(activeTime);
     if (activeTime > 5) {
         $(`.inputContainer`).hide();
     } else {
@@ -111,4 +143,21 @@ $(`#clearLikedPhoto`).click(() => {
     localStorage.setItem('db', JSON.stringify(db));
     $('.pictureWindow').empty();
     showSavedPicture();
+    $('.photoPopup').hide();
+});
+
+$('.pictureWindow').on('click', '.deletePhoto', function(e) {
+    let index = $(this).closest('.pictureItem').index();
+    db.splice(index, 1);
+    localStorage.setItem('db', JSON.stringify(db));
+    $(this).closest('.pictureItem').remove();
+    $('.photoPopup').hide();
+});
+
+$('.pictureWindow').on('mouseenter', '.pictureItem', function() {
+    $(this).find('.photoPopup').show();
+});
+
+$('.pictureWindow').on('mouseleave', '.pictureItem', function() {
+    $(this).find('.photoPopup').hide();
 });
