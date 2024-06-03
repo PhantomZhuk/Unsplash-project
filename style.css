@@ -121,13 +121,13 @@
 #rewindSpeed {
     position: fixed;
     top: 21px;
-    right: 100px;
+    right: 200px;
 }
 
 .textRewindSpeed {
     position: fixed;
     top: 30px;
-    right: 270px;
+    right: 100px;
 }
 
 .rewindSpeedContainer {
@@ -269,14 +269,29 @@
 
 @media screen and (max-width: 700px){
     .rewindSpeedContainer {
-        font-size: 16px;
+        font-size: 18px;
     }
     
     .textRewindSpeed {
-        top: 35px;
+        top: 32px;
     }
 
     .pictureWindow {
         width: 100%;
+    }
+
+    #rewindSpeed {
+        right: 190px;
+    }
+}
+
+@media screen and (max-width: 450px){
+    .pictureItem {
+        width: 170px;
+        height: 100px;
+    }
+
+    .photoPopup {
+        padding: 0 25px;
     }
 }
